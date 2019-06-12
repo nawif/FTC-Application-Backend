@@ -21,8 +21,8 @@ class CreatePointsTable extends Migration
 
             $table->integer('value')->nullable();
             $table->integer('event_id');
-            $table->integer('approvedByAdmin')->default(0);
-            $table->integer('approvedByLeader')->default(0);
+            $table->integer('is_approved_by_admin')->default(0);
+            $table->integer('is_approved_by_leader')->default(0);
             $table->mediumText('description')->nullable();
             $table->string('job_approved_by')->references('id')->on('users')->nullable();
             $table->timestamps();
