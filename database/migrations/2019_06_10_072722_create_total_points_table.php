@@ -19,7 +19,7 @@ class CreateTotalPointsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('value');
+            $table->integer('value')->default(0);
             $table->timestamps();
         });
     }
