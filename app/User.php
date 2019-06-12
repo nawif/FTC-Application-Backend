@@ -2,8 +2,8 @@
 
 namespace App;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
@@ -58,7 +58,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    
+
+    public function getDefaultPhoto()
+    {
+        return "String";
+    }
+
     public function points()
     {
         return $this->hasMany('App\Point');
