@@ -31,15 +31,20 @@ class DatabaseSeeder extends Seeder
 	            'device_id' => $faker->domainName,
 	            'bio' => $faker->paragraph,
 	            'password' => Hash::make("12345"),
-	        ]);
+            ]);
+            DB::table('total_points')->insert([
+                'user_id' => 1,
+	            'value' => $faker->numberBetween(0,2000),
+            ]);
     }
 
-    public function generateUsers($num = 10)
+    public function generateUsers($num = 11)
     {
         $faker = Faker::create();
         $password = '12345';
-        foreach (range(1,$num) as $index) {
+        foreach (range(2,$num) as $index) {
 	        DB::table('users')->insert([
+                'id' => $index,
 	            'first_name' => $faker->firstName,
 	            'last_name' => $faker->lastName,
 	            'student_id' => $faker->numberBetween(436100000,436109999),
@@ -48,7 +53,12 @@ class DatabaseSeeder extends Seeder
 	            'device_id' => $faker->domainName,
 	            'bio' => $faker->paragraph,
 	            'password' => Hash::make($password),
-	        ]);
+            ]);
+            DB::table('total_points')->insert([
+                'user_id' => $index,
+	            'value' => $faker->numberBetween(0,2000),
+            ]);
+
         }
     }
 
@@ -68,7 +78,7 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    public function generateTasks($num = 20)
+    public function generateTasks($num = 50)
     {
         $faker = Faker::create();
         foreach (range(1,$num) as $index) {
@@ -79,6 +89,7 @@ class DatabaseSeeder extends Seeder
 	            'user_id' => $user_id ,
 	            'event_id' => $event_id ,
 	            'is_approved' => $faker->numberBetween(0,1),
+	            'created_at' => now(),
             ]);
 
             DB::table('users_events')->insert([
