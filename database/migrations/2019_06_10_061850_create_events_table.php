@@ -14,11 +14,11 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-                $table->increments('id');
+                $table->bigIncrements('id');
                 $table->string('name');
                 $table->mediumText('whatsapp_link')->nullable();
 
-                $table->integer('leader_id')->unsigned();
+                $table->bigInteger('leader_id')->unsigned();
                 $table->foreign('leader_id')->references('id')->on('users');
 
                 $table->mediumText('description');

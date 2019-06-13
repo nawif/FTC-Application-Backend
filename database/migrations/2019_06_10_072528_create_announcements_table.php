@@ -14,9 +14,9 @@ class CreateAnnouncementsTable extends Migration
     public function up()
     {
         Schema::create('announcements', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->integer('writer_id')->unsigned();
+            $table->bigInteger('writer_id')->unsigned();
             $table->foreign('writer_id')->references('id')->on('users');
 
             $table->string('title');
