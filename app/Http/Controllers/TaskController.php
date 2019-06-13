@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTask;
 
 class TaskController extends Controller
 {
@@ -33,9 +34,15 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTask $request)
     {
-        //
+        $user = auth()->user();
+        Task::create([
+            'description' => $request['description'],
+            'user_id' => $user->id,
+            'event_id' => $request['event_id'],
+            ]);
+        return Response(['message' => 'task created!'], 201);
     }
 
     /**

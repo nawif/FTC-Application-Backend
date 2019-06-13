@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Middleware\CheckAlreadyJoined;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,5 +43,14 @@ Route::group([
 
 ], function ($router) {
     Route::post('/create', 'PointController@store');
+});
+
+Route::group([
+
+    'middleware' => 'jwt.auth',
+    'prefix' => 'task'
+
+], function ($router) {
+    Route::post('/create', 'TaskController@store')->middleware(CheckAlreadyJoined::class);
 });
 
