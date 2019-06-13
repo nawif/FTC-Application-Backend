@@ -16,7 +16,7 @@ class Task extends JsonResource
     {
         return [
             'description' => $this->description,
-            'date' => $this->created_at
+            'date' => $this->created_at->format('Y-m-d')
         ];
     }
 }
