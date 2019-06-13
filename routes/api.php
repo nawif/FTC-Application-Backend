@@ -52,5 +52,6 @@ Route::group([
 
 ], function ($router) {
     Route::post('/create', 'TaskController@store')->middleware(CheckAlreadyJoined::class);
+    Route::get('/user/{id}', 'TaskController@showUserTasks');
 });
 
