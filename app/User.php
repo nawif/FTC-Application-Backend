@@ -64,10 +64,11 @@ class User extends Authenticatable implements JWTSubject
         return "String"; //TODO:
     }
 
-    public function points()
+    public function tasks()
     {
-        return $this->hasMany('App\Point');
+        return $this->hasMany('App\Task');
     }
+
 
     public function unapprovedImages()
     {
