@@ -64,6 +64,21 @@ class User extends Authenticatable implements JWTSubject
         return "String"; //TODO:
     }
 
+    public function getFullName()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
+
+    public function getTotalPoints()
+    {
+        return $this->TotalPoints()->value;
+    }
+
+    public function getProfilePhotoLink()
+    {
+        return "hello world";
+    }
+
     public function tasks()
     {
         return $this->hasMany('App\Task');
