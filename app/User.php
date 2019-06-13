@@ -61,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getDefaultPhoto()
     {
-        return "String";
+        return "String"; //TODO:
     }
 
     public function points()
