@@ -27,5 +27,21 @@ Route::group([
 
 });
 
-Route::post('/create', 'UserController@store');
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'user'
+
+], function ($router) {
+    Route::post('/create', 'UserController@store');
+});
+
+Route::group([
+
+    'middleware' => 'jwt.auth',
+    'prefix' => 'point'
+
+], function ($router) {
+    Route::post('/create', 'PointController@store');
+});
 

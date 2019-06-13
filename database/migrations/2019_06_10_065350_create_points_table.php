@@ -15,16 +15,16 @@ class CreatePointsTable extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('value');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->mediumText('description');
 
-            $table->integer('value')->nullable();
-            $table->integer('event_id');
-            $table->integer('is_approved_by_admin')->default(0);
-            $table->integer('is_approved_by_leader')->default(0);
-            $table->mediumText('description')->nullable();
-            $table->string('job_approved_by')->references('id')->on('users')->nullable();
+            $table->integer('approved_by_admin_id')->unsigned();
+            $table->foreign('approved_by_admin_id')->references('id')->on('users');
+
+            $table->integer('work_id')->unsigned();
+            $table->foreign('work_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }
