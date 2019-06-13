@@ -17,13 +17,11 @@ class CreatePointsTable extends Migration
             $table->increments('id');
             $table->integer('value');
 
-            $table->mediumText('description');
-
             $table->integer('approved_by_admin_id')->unsigned();
             $table->foreign('approved_by_admin_id')->references('id')->on('users');
 
-            $table->integer('work_id')->unsigned();
-            $table->foreign('work_id')->references('id')->on('users');
+            $table->integer('task_id')->unsigned();
+            $table->foreign('task_id')->references('id')->on('tasks');
 
             $table->timestamps();
         });
