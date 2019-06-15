@@ -47,8 +47,8 @@ class TaskController extends Controller
         return new Response($userTasks, 200);
     }
 
-        /**
-     * Display the specified resource.
+    /**
+     * TODO
      *
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response

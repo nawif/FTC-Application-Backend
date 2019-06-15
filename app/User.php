@@ -71,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getTotalPoints()
     {
-        return $this->TotalPoints()->value;
+        return $this->totalPoints()->first()->value;
     }
 
     public function getProfilePhotoLink()
@@ -100,9 +100,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\SocialmediaAccount');
     }
 
-    public function TotalPoints()
+    public function totalPoints()
     {
-        return $this->belongsTo('App\TotalPoints');
+        return $this->hasOne('App\TotalPoints');
     }
 
     public function announcements()

@@ -23,7 +23,7 @@ class User extends JsonResource
             'bio' => $this->bio,
             'profilephoto_b64' => $this->profilephoto,
             'profilephoto_full_link' => $this->getProfilePhotoLink(),
-            'total_points' => $this->totalPoints(),
+            'total_points' => $this->getTotalPoints(),
         ];
     }
 }
