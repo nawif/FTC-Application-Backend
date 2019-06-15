@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TotalPoints extends Model
 {
     protected $fillable = [
-        'user_id'
+        'user_id', 'value',
     ];
 
     public function user()
