@@ -42,7 +42,7 @@ Route::group([
     'prefix' => 'point'
 
 ], function ($router) {
-    Route::post('/create', 'PointController@store');
+    Route::get('/leaderboard', 'PointController@getLeaderboard');
 });
 
 Route::group([
