@@ -5,6 +5,7 @@ namespace App;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -76,7 +77,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function getProfilePhotoLink()
     {
-        return "hello world";
+        $path = Storage::url('users_images/approved/'.$this->id.'.jpg');
+        return asset($path);
     }
 
     public function tasks()
