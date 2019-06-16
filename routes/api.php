@@ -18,7 +18,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 
-], function ($router) {
+], function () {
 
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
@@ -32,7 +32,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 
-], function ($router) {
+], function () {
     Route::post('/create', 'UserController@store');
 });
 
@@ -41,7 +41,7 @@ Route::group([
     'middleware' => 'jwt.auth',
     'prefix' => 'point'
 
-], function ($router) {
+], function () {
     Route::get('/leaderboard', 'PointController@getLeaderboard');
 });
 
@@ -50,7 +50,7 @@ Route::group([
     'middleware' => 'jwt.auth',
     'prefix' => 'task'
 
-], function ($router) {
+], function () {
     Route::post('/create', 'TaskController@store')->middleware(CheckAlreadyJoined::class);
     Route::get('/user/{id}', 'TaskController@showUserTasks');
 });
