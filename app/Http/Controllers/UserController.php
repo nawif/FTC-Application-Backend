@@ -15,6 +15,7 @@ class UserController extends Controller
     public function store(StoreUser $request) {
         $validatedData = $request->validated(); // if input doesn't meet the set rules a error message will be thrown, otherwise it will continue
 
+        
         $newUser = new User($validatedData);
         $newUser->password = Hash::make($validatedData['password']);
         $newUser->profilephoto = $newUser->getDefaultPhoto();
