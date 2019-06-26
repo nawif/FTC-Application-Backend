@@ -12,13 +12,9 @@ class PointController extends Controller
     public function getLeaderboard(){
         $users = User::where('is_admin', 0)->get(); // Admins shouldn't appear in the leaderboard
 
-        $sortedUsers = $users->sortByDesc(function ($user) {
-            return $user->getTotalPoints();
-        });
-        $sortedResource = UserTasks::collection($sortedUsers);
+        $usersResource = UserTasks::collection($users);
 
-        return new Response($sortedResource, 200);
-
+        return new Response($usersResource, 200);
     }
 
 }
