@@ -6,6 +6,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -73,6 +74,16 @@ class User extends Authenticatable implements JWTSubject
     public function getTotalPoints()
     {
         return $this->totalPoints()->first()->value;
+    }
+
+    public function getWeekPoints()
+    {
+        $one_week_ago = Carbon::now()->subWeeks(1);
+        $weekly_point = Point::where('user_id', $this->id)
+            ->where('updated_at', '>=', $one_week_ago)
+            ->sum('value');
+        return $weekly_point;
+
     }
 
     public function getProfilePhotoLink()
