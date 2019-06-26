@@ -23,6 +23,9 @@ class CreatePointsTable extends Migration
             $table->bigInteger('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks');
 
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }
