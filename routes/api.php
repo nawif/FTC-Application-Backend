@@ -55,3 +55,11 @@ Route::group([
     Route::get('/user/{id}', 'TaskController@showUserTasks');
 });
 
+Route::group([
+
+    'middleware' => 'jwt.auth',
+    'prefix' => 'event'
+
+], function () {
+    Route::post('/create', 'EventController@store');
+});
