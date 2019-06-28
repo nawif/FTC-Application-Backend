@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Event;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreEvent;
 
 class EventController extends Controller
 {
-    public function store(Type $var = null)
+    public function store(StoreEvent $request )
     {
-        # code...
+        $validatedData = $request->validated();
+        $validatedData['leader_id'] = Auth::user()->id;
+        $event = new Event($validatedData);
+        $event->save();
+        $event->users()->attach($validatedData['registered_users']);
+        return Response(["message" => "event ".$event->name." created successfully"], 201);
     }
 }
