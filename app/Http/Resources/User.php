@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\SocialMedia as SocialMediaResource;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class User extends JsonResource
@@ -25,6 +27,7 @@ class User extends JsonResource
             'profilephoto_full_link' => $this->getProfilePhotoLink(),
             'total_points' => $this->getTotalPoints(),
             'weekly_points' => $this->getWeekPoints(),
+            'socialmedia' => SocialMediaResource::collection($this->socialMediaAccounts()->get())
         ];
     }
 }
