@@ -23,7 +23,7 @@ class CreateEventsTable extends Migration
 
                 $table->mediumText('description');
                 $table->integer('user_limit');
-                $table->date('date')->nullable();
+                $table->date('date')->default(now());
                 $table->string('status')->default('READY'); //READY= IN PORGRESS , DONE=FINISHED
                 $table->string('type');	// ORGANIZE OR ATTEND
                 $table->timestamps();

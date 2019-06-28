@@ -23,9 +23,9 @@ class User extends JsonResource
             'is_admin' => $this->is_admin,
             'phone' => $this->phone,
             'bio' => $this->bio,
-            'profilephoto_b64' => $this->profilephoto,
             'profilephoto_full_link' => $this->getProfilePhotoLink(),
-            'total_points' => $this->getTotalPoints(),
+            'profilephoto_b64' => $this->profilephoto,
+            'total_points' => $this->total_points,
             'weekly_points' => $this->getWeekPoints(),
             'socialmedia' => SocialMediaResource::collection($this->socialMediaAccounts()->get())
         ];

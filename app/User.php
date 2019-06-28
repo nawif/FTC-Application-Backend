@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'student_id', 'is_admin', 'phone', 'device_id', 'bio', 'profilephoto'
+        'first_name', 'last_name', 'student_id', 'total_points', 'is_admin', 'phone', 'device_id', 'bio', 'profilephoto'
     ];
 
     /**
@@ -71,11 +71,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->first_name.' '.$this->last_name;
     }
 
-    public function getTotalPoints()
-    {
-        return $this->totalPoints()->first()->value;
-    }
-
     public function getWeekPoints()
     {
         $one_week_ago = Carbon::now()->subWeeks(1);
@@ -111,11 +106,6 @@ class User extends Authenticatable implements JWTSubject
     public function socialMediaAccounts()
     {
         return $this->hasMany('App\SocialmediaAccount');
-    }
-
-    public function totalPoints()
-    {
-        return $this->hasOne('App\TotalPoints');
     }
 
     public function announcements()

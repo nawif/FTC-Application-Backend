@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->integer('student_id')->unique();
+            $table->integer('total_points')->default(0);
             $table->integer('is_admin')->default(0);
             $table->string('email')->nullable();
             $table->string('password');
