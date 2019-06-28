@@ -1,12 +1,12 @@
 <?php
 namespace App\Service\UserService;
 
-use App\Service\UserService\UserServiceInterface;
+use App\Service\UserService\UserServiceContract;
 use App\TotalPoints;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 
-class UserServiceImp implements UserServiceInterface{
+class UserService implements UserServiceContract{
 
     public function store($user_data)
     {

@@ -1,7 +1,7 @@
 <?php
 namespace App\Service\UserService;
 
-interface UserServiceInterface
+interface UserServiceContract
 {
     public function store($user_data);
 }
