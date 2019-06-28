@@ -6,6 +6,10 @@ use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
+
+    protected $numOfUsers = 60;
+
+
     /**
      * Seed the application's database.
      *
@@ -14,10 +18,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->createAdmin();
-        $this->generateUsers();
+        $this->generateUsers($this->numOfUsers);
         $this->generateEvents();
         $this->generateTasks();
         $this->generatePoints();
+        $this->generateSocialMediaAccounts();
     }
 
     public function createAdmin()
@@ -82,13 +87,13 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    public function generateTasks($num = 50)
+    public function generateTasks($avrPerUser = 50)
     {
         $startDate = Carbon::now()->subWeeks(15);
         $faker = Faker::create('ar_SA');
-        foreach (range(1,$num) as $index) {
+        foreach (range(1,$avrPerUser*$this->numOfUsers) as $index) {
             $event_id = $faker->numberBetween(1,10);
-            $user_id = $faker->numberBetween(1,11);
+            $user_id = $faker->numberBetween(1, $this->numOfUsers);
 	        DB::table('tasks')->insert([
 	            'description' => $faker->realText(100),
 	            'user_id' => $user_id ,
@@ -105,19 +110,33 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    public function generatePoints($num = 50)
+    public function generatePoints($avrPerUser = 50)
     {
         $startDate = Carbon::now()->subWeeks(3);
         $faker = Faker::create('ar_SA');
-        foreach (range(1,$num) as $index) {
+        foreach (range(1,$avrPerUser * $this->numOfUsers) as $index) {
 	        DB::table('points')->insert([
 	            'value' => $faker->numberBetween(1,99),
 	            'approved_by_admin_id' => 1 ,
 	            'task_id' => $index,
-                'user_id' => $faker->numberBetween(2,11),
+                'user_id' => $faker->numberBetween(2,$this->numOfUsers),
                 'updated_at' => $faker->dateTimeBetween($startDate)
             ]);
 
+        }
+    }
+    public function generateSocialMediaAccounts()
+    {
+        $faker = Faker::create();
+        $socialMediaPlatforms = ['twitter', 'steam', 'whatsapp', 'linkedin', 'snapchat'];
+        foreach (range(1,$this->numOfUsers) as $index) {
+        for ($i=0; ($i < sizeof($socialMediaPlatforms)) && $i<$faker->numberBetween(0, sizeof($socialMediaPlatforms)) ; $i++) {
+            DB::table('socialmedia_accounts')->insert([
+	            'platform' => $socialMediaPlatforms[$i],
+	            'username' => $faker->userName() ,
+                'user_id' => $index,
+            ]);
+        }
         }
     }
 }
