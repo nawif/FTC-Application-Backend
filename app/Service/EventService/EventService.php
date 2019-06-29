@@ -35,7 +35,29 @@ class EventService implements EventServiceContract{
         return $events;
     }
 
-    private function canEnroll($user, $event){
-        ($event);
+    public function enrollInEvent($event_id){
+        try { //checking if event exist
+            $event = Event::findOrfail($event_id);
+        } catch (\Throwable $th) {
+            return Response(['message' => 'event doesn\'t exist '], 404);
+        }
+        //checking if event is full
+        if($event->status == 'FULL'){
+            return Response(['message' => 'event full'], 404);
+        }
+        $user = Auth::user();
+
+        if (! $event->users->contains($user->id)) {
+            $event->users()->save($user);
+        }else
+            return Response(['message' => 'user already enrolled'], 404);
+
+        if($event->users->count() >= $event->user_limit){
+            $event->status = 'FULL';
+        }
+
+        $event->save();
+
+        return Response(['message' => 'user added'], 200);
     }
 }

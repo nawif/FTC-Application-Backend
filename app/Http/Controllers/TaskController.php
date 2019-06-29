@@ -40,7 +40,7 @@ class TaskController extends Controller
         try {
             $user = User::findOrfail($user_id)->first();
         } catch (\Throwable $th) {
-            return Response(['message' => 'no such user!'], 422);
+            return Response(['message' => 'no such user!'], 404);
         }
         $userTasks = new UserTasksResource($user);
 
@@ -57,7 +57,7 @@ class TaskController extends Controller
         try {
             $event = Event::findOrfail($event_id);
         } catch (\Throwable $th) {
-            return Response(['message' => 'no such event!'], 422);
+            return Response(['message' => 'no such event!'], 404);
         }
         $userTasks = $user->tasks()->get();
         $userTasks = TaskResource::collection($userTasks);

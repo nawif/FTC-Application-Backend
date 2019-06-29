@@ -25,12 +25,13 @@ class EventController extends Controller
         try{
             $event = Event::findOrfail($id);
         } catch (\Throwable $th) {
-            return Response(['message' => "event doesn't exist"], 422);
+            return Response(['message' => "event doesn't exist"], 404);
         }
         return Response(new EventDetailsResources($event), 200);
     }
 
     public function enrollInEvent($id, EventServiceContract $eventService) {
-        $eventService->enrollInEvent($id);
+        $response = $eventService->enrollInEvent($id);
+        return $response;
     }
 }
