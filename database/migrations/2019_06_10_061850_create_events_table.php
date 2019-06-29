@@ -24,7 +24,7 @@ class CreateEventsTable extends Migration
                 $table->mediumText('description');
                 $table->integer('user_limit');
                 $table->date('date')->default(now());
-                $table->string('status')->default('READY'); //READY= IN PORGRESS , DONE=FINISHED
+                $table->string('status')->default('READY'); //READY= IN PORGRESS , DONE=FINISHED, FULL = users in event  == limit
                 $table->string('type');	// ORGANIZE OR ATTEND
                 $table->timestamps();
             });
