@@ -63,4 +63,5 @@ Route::group([
 ], function () {
     Route::post('/create', 'EventController@store');
     Route::get('/all', 'EventController@getEvents');
+    Route::get('/{id}', 'EventController@getEventDetails');
 });
