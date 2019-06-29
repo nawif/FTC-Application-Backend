@@ -15,4 +15,9 @@ class Event extends Model
     {
         return $this->belongsToMany('App\User','users_events');
     }
+
+    public function leader()
+    {
+        return $this->belongsTo('App\User', 'leader_id');
+    }
 }
