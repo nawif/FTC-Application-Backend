@@ -33,7 +33,16 @@ Route::group([
     'prefix' => 'user'
 
 ], function () {
+    //exposed user endpoints
     Route::post('/create', 'UserController@store');
+
+    //protected user endpoints
+    Route::group([
+        'middleware' => 'jwt.auth',
+
+    ], function () {
+        Route::get('/all', 'UserController@getUsers');
+    });
 });
 
 Route::group([
