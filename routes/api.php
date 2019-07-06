@@ -71,6 +71,8 @@ Route::group([
 
 ], function () {
     Route::post('/create', 'EventController@store');
+    Route::patch('/edit', 'EventController@patchEvent');
+    Route::delete('/archive/{id}', 'EventController@archiveEvent');
     Route::get('/all', 'EventController@getEvents');
     Route::get('/{id}', 'EventController@getEventDetails');
     Route::put('/enroll/{id}', 'EventController@enrollInEvent');
