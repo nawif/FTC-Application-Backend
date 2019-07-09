@@ -46,14 +46,37 @@ class UserService implements UserServiceContract{
     }
 
     public function addUnapprovedImage($image){
-        ini_set('memory_limit', '-1');
+        // ini_set('memory_limit', '-1');
 
         $user = Auth::user();
         $extension = $image->getClientOriginalExtension();
         $filePath = 'public/users_images/pending/'.$user->id.'.'.$extension;
         $compressedImage = $this->compressUserImage($image, 'profile image');
         Storage::put($filePath, $compressedImage ->stream($extension));
+        UnapprovedImage::where([['user_id',$user->id], ['status', 'PENDING']])->delete();
         UnapprovedImage::create(['user_id' => $user->id, 'extension' => $extension]);
+    }
+
+    public function approveImage($is_approved, $user_id)
+    {
+        $user = User::find($user_id);
+        $pendingImage = UnapprovedImage::where([['user_id',$user_id], ['status', 'PENDING']])->first();
+        if(!$pendingImage)
+        return ['code' => 400, 'message' => 'user doesn\'t have pending image!'];
+        if($is_approved){
+            $user->profilephoto = $this->generateBase64UserIcons(Storage::get($pendingImage->getPath()));
+            $user->save();
+            $pendingImage->status = "APPROVED";
+            $pendingImage->moveToApproved();
+            $pendingImage->save();
+
+            return ['code' => 200, 'message' => 'image approved and updated!'];
+        }else{
+            $pendingImage->status = "DENIED";
+            $pendingImage->deleteFile();
+            $pendingImage->save();
+            return ['code' => 200, 'message' => 'image denied and delete!'];
+        }
     }
 
     /*
@@ -100,11 +123,9 @@ class UserService implements UserServiceContract{
         @return: base 64 string of the passed icon
     */
     private function generateBase64UserIcons($image){
-
         $icon = $this->compressUserImage($image,'icon');
-        // $type = pathinfo($path, PATHINFO_EXTENSION);
 
-        $base64String ='data:image/' . $icon->mime() . ';base64,' . base64_encode($icon);
+        $base64String ='data:image/' . $icon->mime() . ';base64,' . base64_encode($icon->stream($icon->mime()));
         return $base64String;
     }
 

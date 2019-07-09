@@ -46,4 +46,14 @@ class UserController extends Controller
         return Response($response, 200);
     }
 
+    public function approvedImage(Request $request, UserServiceContract $userService) {
+        $this->validate($request, [
+            'user_id' => 'required|exists:users,id',
+            'approved' => 'required|boolean',
+        ]);
+        $response = $userService->approveImage($request['approved'], $request['user_id']);
+
+        return Response(["message" => $response['message']], $response['code']);
+    }
+
 }

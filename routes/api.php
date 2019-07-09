@@ -36,6 +36,7 @@ Route::group([
 ], function () {
 
     Route::get('/pendingimages', 'UserController@getPendingImages');
+    Route::post('/approveimage', 'UserController@approvedImage');
 
 
 });
