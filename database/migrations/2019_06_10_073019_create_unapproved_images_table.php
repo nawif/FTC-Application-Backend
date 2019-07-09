@@ -19,7 +19,7 @@ class CreateUnapprovedImagesTable extends Migration
            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->string('state')->default('PENDING'); // PENDING, APPROVED, DENIED
+            $table->string('status')->default('PENDING'); // PENDING, APPROVED, DENIED
             $table->string('extension');
 
             $table->timestamps();
