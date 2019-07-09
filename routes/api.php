@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckAlreadyJoined;
+use App\Http\Middleware\CheckAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,18 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::get('userInfo', 'AuthController@userInfo');
+
+});
+
+Route::group([
+
+    'middleware' => CheckAdmin::class,
+    'prefix' => 'admin'
+
+], function () {
+
+    Route::get('/pendingimages', 'UserController@getPendingImages');
+
 
 });
 
