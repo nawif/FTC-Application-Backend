@@ -43,6 +43,7 @@ Route::group([
     ], function () {
         Route::get('/all', 'UserController@getUsers');
         Route::patch('/edit', 'UserController@patch');
+        Route::post('/changeprofileimage', 'UserController@changeProfileImage');
     });
 });
 

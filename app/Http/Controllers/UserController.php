@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Service\UserService\UserServiceContract;
 use App\Http\Requests\StoreUser;
-use Illuminate\Auth\Access\Response;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,9 +28,14 @@ class UserController extends Controller
         $userService->patch($request);
     }
 
-    public function changeProfileImage(Request $request)
-    {
-        
+    public function changeProfileImage(Request $request, UserServiceContract $userService) {
+        $this->validate($request, [
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $userService->addUnapprovedImage($request['img']);
+
+        return Response(["message" => "image uploaded successfully"], 201);
+
     }
 
 }

@@ -8,6 +8,8 @@ use App\User;
 use App\SocialmediaAccount;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\UnapprovedImage;
 
 class UserService implements UserServiceContract{
 
@@ -33,7 +35,7 @@ class UserService implements UserServiceContract{
 
     public function patch($user_data){
         $user = Auth::user();
-        
+
         if($user_data['socialmedia'])
             $this->updateUserSocialMediaAccounts($user_data['socialmedia'], $user);
 
@@ -41,8 +43,17 @@ class UserService implements UserServiceContract{
             $user->password = Hash::make($user_data['password']);
             $user->save();
         }
+    }
 
+    public function addUnapprovedImage($image){
+        ini_set('memory_limit', '-1');
 
+        $user = Auth::user();
+        $extension = $image->getClientOriginalExtension();
+        $filePath = 'public/users_images/unapproved/'.$user->id.'.'.$extension;
+        $compressedImage = $this->compressUserImage($image, 'profile image');
+        Storage::put($filePath, $compressedImage ->stream($extension));
+        UnapprovedImage::create(['user_id' => $user->id]);
     }
 
     /*
@@ -77,7 +88,7 @@ class UserService implements UserServiceContract{
         if($type == 'icon')
             $ratio = 200;
         else
-            $ratio = 4000;
+            $ratio = 2000;
         $img=Image::make($image)->resize(null, $ratio, function ($constraint) {
             $constraint->aspectRatio();
         });
