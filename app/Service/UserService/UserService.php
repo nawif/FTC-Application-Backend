@@ -50,10 +50,10 @@ class UserService implements UserServiceContract{
 
         $user = Auth::user();
         $extension = $image->getClientOriginalExtension();
-        $filePath = 'public/users_images/unapproved/'.$user->id.'.'.$extension;
+        $filePath = 'public/users_images/pending/'.$user->id.'.'.$extension;
         $compressedImage = $this->compressUserImage($image, 'profile image');
         Storage::put($filePath, $compressedImage ->stream($extension));
-        UnapprovedImage::create(['user_id' => $user->id]);
+        UnapprovedImage::create(['user_id' => $user->id, 'extension' => $extension]);
     }
 
     /*
