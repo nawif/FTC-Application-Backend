@@ -19,7 +19,7 @@ class PendingImage extends JsonResource
         return [
             'url' => $this->getURL(),
             'full_name' => $user->getFullName(),
-            'id' => $user->id
+            'user_id' => $user->id
         ];
     }
 }
