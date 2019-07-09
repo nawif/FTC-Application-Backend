@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUser;
 use Illuminate\Auth\Access\Response;
 use App\Http\Resources\User as UserResource;
 use App\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -19,7 +20,18 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        return Response(UserResource::collection(User::where('is_admin', 0)->get()), 200);
+        $users = User::where('is_admin', 0)->where('id', '<>', Auth::user()->id)->get(); //every user accept the requested user and the admins
+        return Response(UserResource::collection($users), 200);
+    }
+
+    public function patch(Request $request, UserServiceContract $userService)
+    {
+        $userService->patch($request);
+    }
+
+    public function changeProfileImage(Request $request)
+    {
+        
     }
 
 }

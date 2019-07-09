@@ -20,7 +20,7 @@ class StoreUser extends FormRequest
             'last_name' => 'required',
             'student_id' => 'required|unique:users',
             'phone' => 'required|unique:users',
-            'password' => 'required'
+            'password' => 'required|min:8|max:40'
         ];
     }
 
