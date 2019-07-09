@@ -15,6 +15,6 @@ class UnapprovedImage extends Model
 
     public function getURL()
     {
-        return Storage::url($this->pathToFolder . $this->user_id . $this->extension);
+        return asset(Storage::url($this->pathToFolder . $this->user_id .'.'. $this->extension));
     }
 }
