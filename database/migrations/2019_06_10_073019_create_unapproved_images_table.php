@@ -18,8 +18,8 @@ class CreateUnapprovedImagesTable extends Migration
 
            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            
-            $table->integer('is_approved')->default(0);
+
+            $table->string('state')->default('WAITING'); // WAITING, APPROVED, DENIED
             $table->timestamps();
         });
     }
