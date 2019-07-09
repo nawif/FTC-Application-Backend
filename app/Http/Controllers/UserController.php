@@ -7,6 +7,8 @@ use App\Http\Requests\StoreUser;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
+use App\UnapprovedImage;
+use App\Http\Resources\PendingImage as PendingImageResource;
 
 class UserController extends Controller
 {
@@ -35,7 +37,13 @@ class UserController extends Controller
         $userService->addUnapprovedImage($request['img']);
 
         return Response(["message" => "image uploaded successfully"], 201);
+    }
 
+    public function getPendingImages()
+    {
+        $pendingImages = UnapprovedImage::where('status', 'PENDING')->get();
+        $response = PendingImageResource::collection($pendingImages);
+        return Response($response, 200);
     }
 
 }
