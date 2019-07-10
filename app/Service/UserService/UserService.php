@@ -109,7 +109,7 @@ class UserService implements UserServiceContract{
     */
     private function compressUserImage($image, $type){ // ratio should be 200 if you want b64 icon and 4000 if you want profile image
         if($type == 'icon')
-            $ratio = 200;
+            $ratio = 100;
         else
             $ratio = 2000;
         $img=Image::make($image)->resize(null, $ratio, function ($constraint) {
