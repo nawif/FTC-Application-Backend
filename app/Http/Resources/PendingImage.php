@@ -15,7 +15,7 @@ class PendingImage extends JsonResource
      */
     public function toArray($request)
     {
-        $user = User::find($this->id);
+        $user = User::find($this->user_id);
         return [
             'url' => $this->getURL(),
             'full_name' => $user->getFullName(),
