@@ -38,7 +38,7 @@ class TaskController extends Controller
      */
     public function showUserTasks($user_id) {
         try {
-            $user = User::findOrfail($user_id)->first();
+            $user = User::findOrfail($user_id);
         } catch (\Throwable $th) {
             return Response(['message' => 'no such user!'], 404);
         }
