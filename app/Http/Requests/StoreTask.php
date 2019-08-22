@@ -16,7 +16,7 @@ class StoreTask extends FormRequest
     {
         return [
             'event_id' => 'required|exists:events,id',
-            'description' => 'required|min:10|max:255'
+            'work.*' => 'required|min:10|max:255'
         ];
     }
 

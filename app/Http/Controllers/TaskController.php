@@ -11,6 +11,7 @@ use App\Http\Resources\UserTasks as UserTasksResource;
 use App\User;
 use Illuminate\Http\Response;
 use App\Service\TaskService\TaskServiceContract;
+use App\Event;
 
 class TaskController extends Controller
 {
@@ -23,12 +24,15 @@ class TaskController extends Controller
     public function store(StoreTask $request)
     {
         $user = auth()->user();
-        Task::create([
-            'description' => $request['description'],
-            'user_id' => $user->id,
-            'event_id' => $request['event_id'],
-            ]);
-        return Response(['message' => 'task created!'], 201);
+        foreach ($request['work'] as $description) {
+            Task::create([
+                'description' => $description,
+                'user_id' => $user->id,
+                'event_id' => $request['event_id'],
+                'is_approved' => Event::find($request['event_id'])->leader_id == $user->id
+                ]);
+        }
+        return Response(['message' => 'tasks created!'], 201);
     }
 
     /**

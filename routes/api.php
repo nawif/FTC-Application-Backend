@@ -83,7 +83,6 @@ Route::group([
 });
 
 Route::group([
-
     'middleware' => 'jwt.auth',
     'prefix' => 'event'
 
