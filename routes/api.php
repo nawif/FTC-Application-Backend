@@ -78,6 +78,8 @@ Route::group([
 ], function () {
     Route::post('/create', 'TaskController@store')->middleware(CheckAlreadyJoined::class);
     Route::get('/user/{id}', 'TaskController@showUserTasks');
+    Route::get('/unapproved/{id}', 'TaskController@showUnapprovedTasks');
+
 });
 
 Route::group([
@@ -86,6 +88,8 @@ Route::group([
     'prefix' => 'event'
 
 ], function () {
+
+    Route::get('/user', 'EventController@getUserEvents');
     Route::post('/create', 'EventController@store');
     Route::patch('/edit', 'EventController@patchEvent');
     Route::delete('/archive/{id}', 'EventController@archiveEvent');

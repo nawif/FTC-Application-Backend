@@ -11,13 +11,19 @@ class Event extends Model
     ];
 
 
-    public function users()
-    {
+    public function users(){
         return $this->belongsToMany('App\User','users_events');
     }
 
-    public function leader()
-    {
+    public function leader(){
         return $this->belongsTo('App\User', 'leader_id');
+    }
+
+    public function tasks(){
+            return $this->hasMany('App\Task');
+    }
+
+    public function unapprovedTasks(){
+        return $this->hasMany('App\Task')->where('is_approved',0);
     }
 }

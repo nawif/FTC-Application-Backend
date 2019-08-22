@@ -10,6 +10,7 @@ use App\Http\Resources\UserTasks as UserTasksResource;
 
 use App\User;
 use Illuminate\Http\Response;
+use App\Service\TaskService\TaskServiceContract;
 
 class TaskController extends Controller
 {
@@ -48,21 +49,14 @@ class TaskController extends Controller
     }
 
     /**
-     * TODO
+     *
      *
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function showEventUnapprovedTasks($event_id) {
-        try {
-            $event = Event::findOrfail($event_id);
-        } catch (\Throwable $th) {
-            return Response(['message' => 'no such event!'], 404);
-        }
-        $userTasks = $user->tasks()->get();
-        $userTasks = TaskResource::collection($userTasks);
-
-        return new Response($userTasks, 200);
+    public function showUnapprovedTasks($id, TaskServiceContract $taskService) {
+        $eventsUnapprovedTasks = $taskService->getEventUnapprovedTasks($id);
+        return new Response($eventsUnapprovedTasks, 200);
     }
 
     /**

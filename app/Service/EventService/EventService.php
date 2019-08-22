@@ -49,6 +49,7 @@ class EventService implements EventServiceContract{
         $availableEvents = Event::where('status', 'READY')->get();
         $fullEvents = Event::where('status', 'FULL')->get();
         $userEvents =  $user->events()->get();
+        $userEvents = $userEvents->concat(Event::where('leader_id', $user->id)->get());
 
         //removing events where user already enrolled in
         $availableEvents= $availableEvents->whereNotIn('id' ,$userEvents->pluck('id'))->where('leader_id', '<>', $user->id);

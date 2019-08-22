@@ -3,11 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Service\UserService\UserService;
+use App\Service\TaskService\TaskService;
 
-// use App\Service\UserService\UserService;
-
-class UserServiceProvider extends ServiceProvider
+class TaskServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -26,10 +24,9 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $this->app->bind(
-            'App\Service\UserService\UserServiceContract', function ($app) {
-                return new UserService();
+            'App\Service\TaskService\TaskServiceContract', function ($app) {
+                return new TaskService();
               }
         );
     }

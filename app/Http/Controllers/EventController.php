@@ -7,6 +7,9 @@ use App\Service\EventService\EventServiceContract;
 use App\Event;
 use App\Http\Resources\EventDetails as EventDetailsResources;
 use App\Http\Requests\PatchEvent;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Event as EventResource;
+
 
 class EventController extends Controller
 {
@@ -19,6 +22,13 @@ class EventController extends Controller
     public function getEvents(EventServiceContract $eventService) {
         $eventsResource = $eventService->getEvents();
         return Response($eventsResource, 200);
+    }
+
+    public function getUserEvents() { //TODO: MOVE LOGIC TO SERVICE
+        $user = Auth::user();
+        $userEvents =  $user->events()->get();
+        $userEvents = $userEvents->concat(Event::where('leader_id', $user->id)->get());
+        return Response(EventResource::collection($userEvents), 200);
     }
 
     public function getEventDetails($id) {
