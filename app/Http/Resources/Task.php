@@ -15,6 +15,7 @@ class Task extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'description' => $this->description,
             'date' => $this->created_at->format('Y-m-d')
         ];

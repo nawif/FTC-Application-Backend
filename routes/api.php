@@ -79,7 +79,7 @@ Route::group([
     Route::post('/create', 'TaskController@store')->middleware(CheckAlreadyJoined::class);
     Route::get('/user/{id}', 'TaskController@showUserTasks');
     Route::get('/unapproved/{id}', 'TaskController@showUnapprovedTasks');
-
+    Route::patch('/approve', 'TaskController@update');
 });
 
 Route::group([

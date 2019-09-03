@@ -12,6 +12,7 @@ use App\User;
 use Illuminate\Http\Response;
 use App\Service\TaskService\TaskServiceContract;
 use App\Event;
+use App\Http\Requests\PatchTask;
 
 class TaskController extends Controller
 {
@@ -64,26 +65,46 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Task  $task
+     * @param  \Illuminate\Http\PatchTask  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+
+    public function update(PatchTask $request)
     {
-        //
+        $validatedData = $request->validated();
+        $user = auth()->user();
+        if(Event::find($validatedData['event_id'])->leader_id != $user->id)
+            return Response("UNAUTH", 404);
+
+        foreach ($validatedData['tasks'] as $task) {
+            try {
+                $task_record = Task::where([
+                    ['event_id', '=', $validatedData['event_id']],
+                    ['id', '=', $task['id']]
+                ])->firstOrFail();
+            } catch (\Throwable $th) {
+                return Response("UNAUTH", 404);
+            }
+            switch ($task['status']) {
+                case 'approved':
+                    $task_record->is_approved = 1;
+                    $task_record->save();
+                    break;
+                case 'declined':
+                    $task_record->is_approved = -1;
+                    $task_record->save();
+                    break;
+                case 'edited':
+                $task_record->is_approved = 1;
+                $task_record->description = $task['description'];
+                $task_record->save();
+                    break;
+            }
+        }
+
+        return Response("task updated!");
     }
 
     /**
